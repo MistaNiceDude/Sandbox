@@ -17,12 +17,14 @@ run = True
 player = Player(WIDTH/2, HEIGHT/2)
 player.x = 400
 player.y = 400
+block = Block(100, 100)
 
 
 while run:
     DISPLAY.fill(black)
     player.draw(DISPLAY)
     player.move(DISPLAY)
+    block.draw(DISPLAY)
 
 
 
