@@ -34,9 +34,9 @@ def redraw():
     player.draw(DISPLAY)
     player.move(DISPLAY)
     block.draw(DISPLAY)
-    clock_label = clock_font.render(f"FPS: {clock}", 2, (255, 255, 255))
-    player.x_label = player.x_font.render(f" {player.x_m}", 2, (255, 255, 255))
-    player.y_label = player.y_font.render(f" {player.y_m}", 2, (255, 255, 255))
+    clock_label = clock_font.render(f"FPS: {clock}", 1, (255, 255, 255))
+    player.x_label = player.x_font.render(f" {player.x_m}", 1, (255, 255, 255))
+    player.y_label = player.y_font.render(f" {player.y_m}", 1, (255, 255, 255))
     DISPLAY.blit(clock_label, (20, HEIGHT - clock_label.get_height() - 20))
     DISPLAY.blit(player.x_label, (WIDTH - player.x_label.get_width() - 20, HEIGHT - player.x_label.get_height() - 40))
     DISPLAY.blit(player.y_label, (WIDTH - player.y_label.get_width() - 20, HEIGHT - player.y_label.get_height() - 20))
@@ -45,15 +45,37 @@ def redraw():
 while run:
     clock.tick(FPS)
     redraw()
+    print(Player.collide_dir(player.hitbox))
 
 
-    collision = collide(player, block)
-    if collision == True:
-        if player.x > block.x + block.get_width()/2 and block.x > 0:
+
+    #collision = collide(player, block)
+    #if collision == True:
+    #    if player.x > block.x + block.get_width()/2 and block.x > 0:
+    #        block.move(0, -Player.player_vel)
+    #        print("collision")
+    #
+    if collide(player, block) == True:
+        if player.y > block.y + block.get_height()/2 - 10 and block.y > 0:
             block.move(0, -Player.player_vel)
+        elif player.y < block.y - block.get_height()/2 + 10 and block.y + block.get_height() < HEIGHT:
+            block.move(0, Player.player_vel)
+        elif player.x > block.x + block.get_width()/2 + 10 and block.x > 0:
+            block.move(-Player.player_vel, 0)
+        elif player.x < block.x - block.get_width()/2 - 10 and block.x + block.get_width() < WIDTH:
+            block.move(Player.player_vel, 0)
 
 
-    #print(player.collide_dir(Player))
+
+
+
+
+
+
+
+
+
+
 
 
     # pygame.display.update()
