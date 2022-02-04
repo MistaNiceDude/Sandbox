@@ -1,6 +1,7 @@
 import pygame
 import time
 from classes import *
+import random
 
 pygame.font.init()
 pygame.init()
@@ -25,27 +26,38 @@ FPS = 60
 clock_font = pygame.font.SysFont("comicsans", 20)
 player.x_font = pygame.font.SysFont("comicsans", 20)
 player.y_font = pygame.font.SysFont("comicsans", 20)
+block_length = 6
+
+
 
 def redraw():
+    blocks = []
     player.x_m = (f"Player.x: {player.x}")
     player.y_m = (f"Player.y: {player.y}")
     DISPLAY.fill(black)
     DISPLAY.fill(black)
     player.draw(DISPLAY)
     player.move(DISPLAY)
-    block.draw(DISPLAY)
+    #block.draw(DISPLAY)
     clock_label = clock_font.render(f"FPS: {clock}", 1, (255, 255, 255))
     player.x_label = player.x_font.render(f" {player.x_m}", 1, (255, 255, 255))
     player.y_label = player.y_font.render(f" {player.y_m}", 1, (255, 255, 255))
     DISPLAY.blit(clock_label, (20, HEIGHT - clock_label.get_height() - 20))
     DISPLAY.blit(player.x_label, (WIDTH - player.x_label.get_width() - 20, HEIGHT - player.x_label.get_height() - 40))
     DISPLAY.blit(player.y_label, (WIDTH - player.y_label.get_width() - 20, HEIGHT - player.y_label.get_height() - 20))
+    for i in range(block_length):
+        block = Block(random.randrange(0, WIDTH), random.randrange(0, HEIGHT))
+        blocks.append(block)
+        block.draw(DISPLAY)
+
+   #for block in blocks:
+   #    block.draw(DISPLAY)
 
 
 while run:
     clock.tick(FPS)
     redraw()
-    print(Player.collide_dir(player.hitbox))
+    #print(Player.collide_dir(player.hitbox))
 
 
 
