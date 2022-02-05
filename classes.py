@@ -11,10 +11,24 @@ LEFT_COLLIDE = 0
 RIGHT_COLLIDE = 1
 TOP_COLLIDE = 2
 BOTTOM_COLLIDE = 3
-def collide(obj1, obj2):
-    offset_x = obj2.x - obj1.x
-    offset_y = obj1.y - obj1.y
-    return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None
+
+
+
+class Collision():
+    def __init__(self, x, y, width, height):
+        self.collide_box = pygame.Rect(x, y, width, height)
+        self.has_collide = False
+
+    def set_pos(self, x, y):
+        self.collide_box.x = x
+        self.collide_box.y = y
+
+
+
+
+
+
+
 
 
 
@@ -27,12 +41,23 @@ class Player():
         self.rect = pygame.Rect(self.x, self.y, self.get_width(), self.get_height())
         self.mask = pygame.mask.from_surface(self.player)
         #self.collide = collide(Player, obj2)
+        self.hitbox = pygame.Rect(self.x, self.y, self.get_width(), self.get_height())
+
+
+
+    def set_pos(self, x, y):
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y 
+
 
     def draw(self, WINDOW: pygame.Surface):
         WINDOW.blit(self.player, (self.x, self.y))
         pygame.draw.rect(WINDOW, red, self.rect)
         self.hitbox = (self.x, self.y, self.get_width(), self.get_height())
         pygame.draw.rect(WINDOW, (0, 0, 255), self.hitbox, 2)
+
 
     def get_height(self):
         return self.player.get_height()
@@ -46,24 +71,26 @@ class Player():
         self.rect.x = self.x
         self.rect.y = self.y
 
+
+
     def get_rect(self):
         return self.player.get_rect()
 
-    def collision(self, obj):
-        return collide(obj, self)
-
-    def collide_dir(self):
-        rect = self.hitbox
-        if rect.collidepoint(self.rect.midleft):
-            return LEFT_COLLIDE
-        elif rect.collidepoint(self.rect.midbottom):
-            return BOTTOM_COLLIDE
-        elif rect.collidepoint(self.rect.midtop):
-            return TOP_COLLIDE
-        elif rect.collidepoint(self.rect.midright):
-            return RIGHT_COLLIDE
-        else:
-            return 4
+    #def collision(self, obj):
+    #    return collide(obj, self)
+    #
+    #def collide_dir(self):
+    #    rect = self.hitbox
+    #    if rect.collidepoint(self.rect.midleft):
+    #        return LEFT_COLLIDE
+    #    elif rect.collidepoint(self.rect.midbottom):
+    #        return BOTTOM_COLLIDE
+    #    elif rect.collidepoint(self.rect.midtop):
+    #        return TOP_COLLIDE
+    #    elif rect.collidepoint(self.rect.midright):
+    #        return RIGHT_COLLIDE
+    #    else:
+    #        return 4
 
 
 
