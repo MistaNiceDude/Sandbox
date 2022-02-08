@@ -20,13 +20,13 @@ run = True
 
 
 
-block = Block(WIDTH/2, HEIGHT/2)
+block = Block(WIDTH/2, HEIGHT/2, 40, 40)
 clock = pygame.time.Clock()
 FPS = 60
 clock_font = pygame.font.SysFont("comicsans", 20)
 block_rows = 7
 block_cols = 7
-player = Player(WIDTH/2, HEIGHT/2)
+player = Player(WIDTH/2, HEIGHT/2, 40, 40)
 player.set_pos(WIDTH/2 - player.get_width()/2, HEIGHT/2 - player.get_height()/2)
 player.x_font = pygame.font.SysFont("comicsans", 20)
 player.y_font = pygame.font.SysFont("comicsans", 20)
@@ -37,7 +37,7 @@ center = ((WIDTH/2 - (block_rows * (40 + 4))/2), (HEIGHT/2 - (block_cols * (40 +
 blocks = []
 for i in range(block_cols):
     for j in range(block_rows):                                    #row of blocks on x axis
-        block = Block(center[0] + i * (block.get_width() + 4), center[1] + j * (block.get_height() + 4))
+        block = Block(center[0] + i * (block.get_width() + 4), center[1] + j * (block.get_height() + 4), 40, 40)
         blocks.append(block)
 
 
@@ -86,7 +86,6 @@ def redraw():
 while run:
     clock.tick(FPS)
     collision_handle()
-    print(player.move_dir)
     obj_update()
     redraw()
     
